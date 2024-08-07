@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:13
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./load_data.sql:/docker-entrypoint-initdb.d/load_data.sql
+      - ./csv:/csv
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: DockerFile
+    ports:
+    
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://myuser:mypassword@db:5432/mydatabase
+  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: DockerFile
+      args:
+        - REACT_APP_API_BASE_URL=http://backend:8000
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - REACT_APP_API_BASE_URL=http://backend:8000
