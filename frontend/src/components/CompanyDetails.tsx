@@ -35,17 +35,26 @@ const CompanyDetails: React.FC = () => {
       axios.get(`/api/companies/${id}`)
       .then(response => {
         const comp = response.data as Company;
-        setCompany(response.data.company);
+        setCompany(comp);
         setError(null);
         axios.get(`/api/companies/${id}/locations`)
           .then(response => {
             console.log("company:"+comp);
+            if (!comp) {
+              setError("Company not found");
+              console.log("company not found");
+            }
             const loc = response.data as CompanyLocation[];
+
             console.log("locations:"+loc);
             setLocations(loc);
             setFilteredLocations(loc.filter(location =>
               location.latitude !== comp.latitude && location.longitude !== comp.longitude
             ));
+            if (!loc.filter(location => location.latitude === comp.latitude && location.longitude === comp.longitude)[0]) {
+              setError("HQ not found");
+              console.log("HQ not found");
+            }
             setHeadQuarters(loc.filter(location => location.latitude === comp.latitude && location.longitude === comp.longitude)[0]);
           })
           .catch(error => {
@@ -71,8 +80,8 @@ const CompanyDetails: React.FC = () => {
   
   // Handle the case where the company or locations are still loading
   if (error) return <div>{error}</div>;
-  if (!company) return <div>Loading...</div>;
-  if (!headQuarters) return <div>Loading...</div>;
+  if (!company) return <div>Loading... company</div>;
+  if (!headQuarters) return <div>Loading...HQ </div>;
   const handleLocationClick = (location: CompanyLocation|null) => {
     setSelectedLocation(location);
   };
