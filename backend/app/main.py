@@ -116,10 +116,14 @@ def register():
     data = request.get_json()
     if not data or not data.get('username') or not data.get('password'):
         abort(400, description="Username and password are required")
-    
     try:
         register_user(data['username'], data['password'])
-        return jsonify({"message": "User registered successfully"}), 201
+        user = authenticate_user(data['username'], data['password'])
+        if user:
+            access_token = create_access_token(identity=user.user_id)
+            return jsonify({"message": "User registered successfully", "access_token":access_token}), 201
+        else:
+            return internal_error()
     except Exception as e:
         logging.error(f"Error registering user: {str(e)}")
         return internal_error()

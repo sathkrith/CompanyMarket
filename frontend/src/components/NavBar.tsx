@@ -14,7 +14,7 @@ const Navbar = (): JSX.Element => {
   const isHome = location.pathname === '/';
 
   return (
-    <nav className="p-4 fixed w-full top-0 z-10 flex justify-between items-center pr-1.25">
+    <nav className="bg-yellow-50 p-4 fixed w-full top-0 z-10 flex justify-between items-center pr-1.25">
       <div className="text-black flex items-center">
         {isHome ? (
           <FaHome className="text-2xl mr-2" />
