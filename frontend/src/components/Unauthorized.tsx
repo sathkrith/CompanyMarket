@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const Unauthorized : React.FC = () => {
+
+    useEffect(() => {
+      document.title = '401 - Unauthorized';
+    }, []);
+
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center">

@@ -31,11 +31,13 @@ const CompanyDetails: React.FC = () => {
   const goBack = () => {
     history('/'); 
   };
+
   useEffect(() => {
       axios.get(`/api/companies/${id}`)
       .then(response => {
         const comp = response.data as Company;
         setCompany(comp);
+        document.title = 'Company Detail - ' + comp.name;
         setError(null);
         axios.get(`/api/companies/${id}/locations`)
           .then(response => {

@@ -12,6 +12,7 @@ const CompanyList: React.FC = () => {
   const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
+    document.title = 'Home - Company List';
     axios.get(`/api/companies`)
       .then(
         response =>  { 
