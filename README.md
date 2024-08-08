@@ -13,7 +13,7 @@ This project is a web application that displays a list of companies and their lo
 
 ### 1. Clone the Repository
 
-git clone https://github.com/sathkrith/CompanyProfile.git <br>
+git clone https://github.com/sathkrith/CompanyMarket.git <br>
 cd CompanyProfile
 
 ### 2. Build and run the application
