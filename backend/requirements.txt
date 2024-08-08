@@ -1,8 +1,11 @@
 flask
-uvicorn
+gunicorn
 pandas
 numpy
 pytest
 sqlalchemy
 flask_sqlalchemy
 flask-jwt-extended
+psycopg2-binary==2.9.3
+Werkzeug
+cryptography

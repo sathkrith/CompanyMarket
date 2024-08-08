@@ -2,9 +2,9 @@ services:
   db:
     image: postgres:13
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./load_data.sql:/docker-entrypoint-initdb.d/load_data.sql
-      - ./csv:/csv
+      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data/load_data.sql:/docker-entrypoint-initdb.d/load_data.sql
+      - ./data/csv:/csv
     environment:
       POSTGRES_DB: mydatabase
       POSTGRES_USER: myuser
@@ -24,7 +24,8 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://myuser:mypassword@db:5432/mydatabase
+      JWT_SECRET_KEY: mysecret
+      DATABASE_URL: postgresql://myuser:mypassword@db:5432/mydatabase
   
   frontend:
     build:

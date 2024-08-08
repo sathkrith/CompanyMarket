@@ -13,7 +13,11 @@ const CompanyList: React.FC = () => {
 
   useEffect(() => {
     axios.get(`/api/companies`)
-      .then(response => setCompanies(response.data.companies))
+      .then(
+        response =>  { 
+          console.log(response.data)
+          setCompanies(response.data)
+        })
       .catch(error => console.error('Error fetching companies:', error));
   }, []);
 

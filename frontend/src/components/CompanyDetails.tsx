@@ -34,15 +34,15 @@ const CompanyDetails: React.FC = () => {
   useEffect(() => {
       axios.get(`/api/companies/${id}`)
       .then(response => {
-        console.log(response.data);
-        const comp = response.data.company as Company;
+        const comp = response.data as Company;
         setCompany(response.data.company);
         setError(null);
         axios.get(`/api/companies/${id}/locations`)
           .then(response => {
-            console.log(response.data.locations);
-            const loc = response.data.locations as CompanyLocation[];
-            setLocations(response.data.locations);
+            console.log("company:"+comp);
+            const loc = response.data as CompanyLocation[];
+            console.log("locations:"+loc);
+            setLocations(loc);
             setFilteredLocations(loc.filter(location =>
               location.latitude !== comp.latitude && location.longitude !== comp.longitude
             ));
